@@ -1,11 +1,4 @@
-services:
-  umbrel:
-    image: dockurr/umbrel
-    container_name: umbrel
-    pid: host
-    ports:
-      - 7500:80
-    volumes:
-      - "/mnt/user/appdata/umbrel:/data"
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    stop_grace_period: 1m
+include:
+  - ./stacks/media/arrtools.yml
+  - ./stacks/oses/umbrel.yml
+
