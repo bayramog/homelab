@@ -9,5 +9,5 @@ services:
       - 5050:5050
     environment:
       TZ: Europe/Istanbul
-      HASS_URL: 192.168.4.125:8123
+      HASS_URL: http://192.168.4.125:8123
     restart: unless-stopped
