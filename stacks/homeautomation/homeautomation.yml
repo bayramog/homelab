@@ -1,2 +1,4 @@
 include:
   - ./ha-fusion/ha-fusion.yml
+  - ./matterbridge.yml
+ 
