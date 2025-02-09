@@ -32,8 +32,8 @@ services:
             # section below.
             # - SCRYPTED_NVR_VOLUME=/nvr
 
-            - SCRYPTED_WEBHOOK_UPDATE_AUTHORIZATION=Bearer ${WATCHTOWER_HTTP_API_TOKEN:-env_missing_fallback}
-            - SCRYPTED_WEBHOOK_UPDATE=http://localhost:10444/v1/update
+            # - SCRYPTED_WEBHOOK_UPDATE_AUTHORIZATION=Bearer ${WATCHTOWER_HTTP_API_TOKEN:-env_missing_fallback}
+            # - SCRYPTED_WEBHOOK_UPDATE=http://localhost:10444/v1/update
 
             # LXC usage only
             # lxc - SCRYPTED_INSTALL_ENVIRONMENT=lxc-docker
@@ -57,7 +57,7 @@ services:
             # Modify to add the additional volume for Scrypted NVR.
             # The following example would mount the /mnt/media/video path on the host
             # to the /nvr path inside the docker container.
-            # - /mnt/media/video:/nvr
+            - /mnt/user/data/nvr:/nvr
 
             # Or use a network mount from one of the CIFS/NFS examples at the top of this file.
             # - type: volume
@@ -76,7 +76,7 @@ services:
 
             # Default volume for the Scrypted database. Typically should not be changed.
             # The volume will be placed relative to this docker-compose.yml.
-            - ./volume:/server/volume
+            - /mnt/user/appdata/scryptedvolume:/server/volume
 
             # LXC usage only
             # lxc - /var/run/docker.sock:/var/run/docker.sock
@@ -97,7 +97,7 @@ services:
             # "/dev/bus/usb:/dev/bus/usb",
 
             # hardware accelerated video decoding, opencl, etc.
-            # "/dev/dri:/dev/dri",
+            "/dev/dri:/dev/dri",
 
             # AMD GPU
             # "/dev/kfd:/dev/kfd",
@@ -125,26 +125,5 @@ services:
             # options:
             #     max-size: "10m"
             #     max-file: "10"
-        labels:
-            - "com.centurylinklabs.watchtower.scope=scrypted"
 
-    # watchtower manages updates for Scrypted.
-    watchtower:
-        environment:
-            - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN:-env_missing_fallback}
-            - WATCHTOWER_HTTP_API_UPDATE=true
-            - WATCHTOWER_SCOPE=scrypted
-            - WATCHTOWER_HTTP_API_PERIODIC_POLLS=${WATCHTOWER_HTTP_API_PERIODIC_POLLS:-true}
-        image: containrrr/watchtower
-        container_name: scrypted-watchtower
-        restart: unless-stopped
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-        labels:
-            - "com.centurylinklabs.watchtower.scope=scrypted"
-        ports:
-            # The auto update port 10444 can be configured
-            # Must match the port in the auto update url above.
-            - 10444:8080
-        # check for updates once an hour (interval is in seconds)
-        command: --interval 3600 --cleanup --scope scrypted
+  
