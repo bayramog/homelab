@@ -22,7 +22,7 @@ services:
         # LXC usage only
         # lxc privileged: true
 
-        environment:
+       # environment:
             # Scrypted NVR Storage (Part 2 of 3)
 
             # Uncomment the next line to configure the NVR plugin to store recordings
