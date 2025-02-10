@@ -2,6 +2,7 @@ services:
   autobrr:
     container_name: autobrr
     image: ghcr.io/autobrr/autobrr:latest
+    network_mode: bridge
     restart: unless-stopped
     #logging:
     #  driver: json-file
@@ -12,6 +13,6 @@ services:
     environment:
       - TZ=Europe/Istanbul
     volumes:
-      - /mnt/user/appdata/autobrr:/config
+      - /mnt/user/appdata/autobrr:/config:rw
     ports:
       - 7474:7474
