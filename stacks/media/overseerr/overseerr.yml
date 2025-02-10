@@ -1,4 +1,4 @@
----
+
 services:
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest

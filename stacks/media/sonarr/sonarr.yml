@@ -1,4 +1,4 @@
----
+
 services:
   radarr:
     image: lscr.io/linuxserver/sonarr:latest
