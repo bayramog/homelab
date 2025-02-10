@@ -1,6 +1,6 @@
 
 services:
-  radarr:
+  readarr:
     image: lscr.io/linuxserver/readarr:latest
     container_name: readarr
     network_mode: bridge

@@ -1,6 +1,6 @@
 
 services:
-  radarr:
+  sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     network_mode: bridge
