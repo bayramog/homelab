@@ -1,0 +1,13 @@
+
+services:
+  homebridge:
+    image: homebridge/homebridge:ubuntu
+    container_name: homebridge
+    restart: ${RESTART_POLICY}
+    network_mode: host
+    environment:
+      - HOMEBRIDGE_CONFIG_UI_PORT=8581
+    volumes:
+      - ${APP_CONFIG_DATA_PATH}/homebridge:/homebridge
+volumes:
+  homebridge:
