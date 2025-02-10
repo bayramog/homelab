@@ -3,11 +3,11 @@ services:
     container_name: ha-fusion
     image: ghcr.io/matt8707/ha-fusion:latest
     volumes:
-      - ${APP_CONFIG_DATA_PATH}/ha-fusion:/app/data
+      - /mnt/user/appdata/ha-fusion:/app/data
     network_mode: bridge
     ports:
       - 5050:5050
     environment:
-      TZ: ${TZ}
-      HASS_URL: ${HASS_URL}:8123
-    restart: ${RESTART_POLICY}
+      TZ: Europe/Istanbul
+      HASS_URL: https://192.168.4.125:8123
+    restart: unless-stopped

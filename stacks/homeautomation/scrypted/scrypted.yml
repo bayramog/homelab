@@ -76,7 +76,7 @@ services:
 
             # Default volume for the Scrypted database. Typically should not be changed.
             # The volume will be placed relative to this docker-compose.yml.
-            - ${APP_CONFIG_DATA_PATH}/scryptedvolume:/server/volume
+            - /mnt/user/appdata/scryptedvolume:/server/volume
 
             # LXC usage only
             # lxc - /var/run/docker.sock:/var/run/docker.sock
@@ -113,7 +113,7 @@ services:
         ]
 
         container_name: scrypted
-        restart: ${RESTART_POLICY}
+        restart: unless-stopped
         network_mode: host
 
         # logging is noisy and will unnecessarily wear on flash storage.
