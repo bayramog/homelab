@@ -1,0 +1,17 @@
+---
+services:
+  radarr:
+    image: lscr.io/linuxserver/readarr:latest
+    container_name: readarr
+    network_mode: bridge
+    environment:
+      - PUID=99
+      - PGID=100
+      - UMASK=022
+      - TZ=Europe/Istanbul
+    volumes:
+      - /mnt/user/appdata/readarr:/config:rw
+      - /mnt/media/data:/data:rw 
+    ports:
+      - 8787:8787
+    restart: unless-stopped

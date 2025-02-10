@@ -1,0 +1,18 @@
+---
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: bridge
+    environment:
+      - PUID=99
+      - PGID=100
+      - UMASK=022
+      - TZ=Europe/Istanbul
+      - WEBUI_PORT=8080
+    volumes:
+      - /mnt/user/appdata/qbittorrent:/config:rw
+      - /mnt/user/data/torrents:/data/torrents:rw #optional
+    ports:
+      - 8080:8080
+    restart: unless-stopped
