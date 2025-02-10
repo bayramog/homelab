@@ -9,8 +9,10 @@ services:
     #  options:
     #    max-file: ${DOCKERLOGGING_MAXFILE}
     #    max-size: ${DOCKERLOGGING_MAXSIZE}
-    user: 99:100
     environment:
+      - PUID=99
+      - PGID=100
+      - UMASK=022
       - TZ=Europe/Istanbul
     volumes:
       - /mnt/user/appdata/autobrr:/config:rw
