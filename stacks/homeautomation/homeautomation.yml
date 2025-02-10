@@ -1,5 +1,6 @@
 include:
   - ./ha-fusion/ha-fusion.yml
-  - ./matterbridge.yml
-  - ./scrypted.yml
+  - ./matterbridge/matterbridge.yml
+  - ./scrypted/scrypted.yml
+  - ./homebridge/homebridge.yml
  
