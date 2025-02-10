@@ -7,3 +7,4 @@ include:
   - ./overseerr/overseerr.yml
   - ./sabnzbd/sabnzbd.yml
   - ./qbittorrent/qbittorrent.yml
+  - ./iqbit.yml
