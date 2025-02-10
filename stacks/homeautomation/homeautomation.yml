@@ -2,5 +2,4 @@ include:
   - ./ha-fusion/ha-fusion.yml
   - ./matterbridge.yml
   - ./scrypted.yml
-env_file: /stack.env
  
