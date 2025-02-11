@@ -1,0 +1,17 @@
+services:
+  rclone_rclone:
+    image: rclone/rclone:latest
+    container_name: rclone
+    restart: unless-stopped
+    network_mode: bridge
+    command: rcd --rc-web-gui --rc-addr :5572 --rc-user bayramog --rc-pass 1234567890
+    ports:
+      - "5572:5572"
+    volumes:
+      - /mnt/user/appdata/rclone:/config/rclone
+      - /mnt/user/appdata/rclonelogs:/logs
+    environment:
+      - PHP_TZ=Europe/Istanbul
+      - PUID=99
+      - PGID=100
+      - UMASK=022
