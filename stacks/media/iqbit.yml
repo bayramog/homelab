@@ -2,6 +2,7 @@
 
 services:
   web:
+    container_name: iqbit
     image: haruvon/iqbit:latest
     restart: unless-stopped
     environment:
