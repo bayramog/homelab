@@ -12,7 +12,7 @@ services:
       - UMASK=022
       - TZ=Europe/Istanbul
     volumes:
-      - /mnt/user/appdata/qbitrr:/config  # Config folder for qBitrr
+      - /mnt/user/appdata/qbitrr:/config:rw  # Config folder for qBitrr
       - /mnt/user/data/torrents/complete:/data/torrents/complete:rw # The script will ALWAYS require write permission in this folder if mounted, this folder is used to monitor completed downloads and if not present will cause the script to ignore downloaded file monitoring.
       # Now just to make sure it is clean, when using this script in a docker you will need to ensure you config.toml values reflect the mounted folders.
       # The same would apply to Settings.CompletedDownloadFolder
