@@ -1,6 +1,6 @@
 services:
   rclone_rclone:
-    image: rclone/rclone:latest
+    image: rclone/rclone:master
     container_name: rclone
     restart: unless-stopped
     network_mode: bridge
