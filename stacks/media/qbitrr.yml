@@ -5,6 +5,7 @@ services:
     image: feramance/qbitrr:latest
     tty: true # Ensure the output of docker-compose logs qBitrr are properly colored.
     restart: unless-stopped
+    network_mode: bridge
     # networks: This container MUST share a network with your Sonarr/Radarr instances
     environment:
       - PUID=99
