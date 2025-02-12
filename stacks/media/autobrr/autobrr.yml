@@ -15,6 +15,6 @@ services:
       - UMASK=022
       - TZ=Europe/Istanbul
     volumes:
-      - /mnt/user/appdata/autobrr:/config:rw
+      - /mnt/cache/appdata/autobrr:/config:rw
     ports:
       - 7474:7474
