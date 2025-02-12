@@ -7,13 +7,13 @@ services:
       - PUID=99
       - PGID=100
       - UMASK=022
-      - VERSION="11"
-      - DISK_SIZE="128G"
-      - RAM_SIZE="16G"
-      - CPU_CORES="4"
-      - LANGUAGE="Turkish"
-      - REGION="tr-TR"
-      - KEYBOARD="tr-TR"
+      - VERSION=11
+      - DISK_SIZE=128G
+      - RAM_SIZE=16G
+      - CPU_CORES=4
+      - LANGUAGE=Turkish
+      - REGION=tr-TR
+      - KEYBOARD=tr-TR
     volumes:
       - /mnt/user/appdata/windowsdocker:/storage:rw
       - /mnt:/data:rw
