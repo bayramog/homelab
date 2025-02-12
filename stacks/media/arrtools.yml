@@ -6,4 +6,4 @@ services:
     ports:
       - "9050:9000"
     volumes:
-      - ${APP_CONFIG_DATA_PATH}/arr-tools:/app/backend/data
+      - /mnt/cache/appdata/arr-tools:/app/backend/data

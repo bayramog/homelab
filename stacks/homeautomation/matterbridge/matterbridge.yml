@@ -5,5 +5,5 @@ services:
     network_mode: host                                        # Ensures the Matter mdns works
     restart: unless-stopped                                           # Ensures the container always restarts automatically
     volumes:
-      - /mnt/user/appdata/matterbridge:/root/Matterbridge        # Mounts the Matterbridge plugin directory
-      - /mnt/user/appdata/.matterbridge:/root/.matterbridge      # Mounts the Matterbridge storage directory
+      - /mnt/cache/appdata/matterbridge:/root/Matterbridge        # Mounts the Matterbridge plugin directory
+      - /mnt/cache/appdata/.matterbridge:/root/.matterbridge      # Mounts the Matterbridge storage directory

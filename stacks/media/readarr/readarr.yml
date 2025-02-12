@@ -10,7 +10,7 @@ services:
       - UMASK=022
       - TZ=Europe/Istanbul
     volumes:
-      - /mnt/user/appdata/readarr:/config:rw
+      - /mnt/cache/appdata/readarr:/config:rw
       - /mnt/media/data:/data:rw 
     ports:
       - 8787:8787

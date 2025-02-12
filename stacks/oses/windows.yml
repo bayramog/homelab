@@ -16,7 +16,7 @@ services:
       - KEYBOARD=tr-TR
       - GPU=Y
     volumes:
-      - /mnt/user/appdata/windowsdocker:/storage:rw
+      - /mnt/cache/appdata/windowsdocker:/storage:rw
       - /mnt:/data:rw
     devices:
       - /dev/dri

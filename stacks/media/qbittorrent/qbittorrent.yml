@@ -11,8 +11,8 @@ services:
       - TZ=Europe/Istanbul
       - WEBUI_PORT=8080
     volumes:
-      - /mnt/user/appdata/qbittorrent:/config:rw
-      - /mnt/user/data/torrents:/data/torrents:rw #optional
+      - /mnt/cache/appdata/qbittorrent:/config:rw
+      - /mnt/media/data/torrents:/data/torrents:rw #optional
     ports:
       - 8080:8080
     restart: unless-stopped

@@ -10,7 +10,7 @@ services:
       - UMASK=022
       - TZ=Europe/Istanbul
     volumes:
-      - /mnt/user/appdata/overseerr:/config:rw
+      - /mnt/cache/appdata/overseerr:/config:rw
     ports:
       - 5055:5055
     restart: unless-stopped

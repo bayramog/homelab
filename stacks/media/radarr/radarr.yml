@@ -10,7 +10,7 @@ services:
       - UMASK=022
       - TZ=Europe/Istanbul
     volumes:
-      - /mnt/user/appdata/radarr:/config:rw
+      - /mnt/cache/appdata/radarr:/config:rw
       - /mnt/media/data:/data:rw 
     ports:
       - 7878:7878

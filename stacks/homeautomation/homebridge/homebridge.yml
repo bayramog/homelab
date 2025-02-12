@@ -8,6 +8,6 @@ services:
     environment:
       - HOMEBRIDGE_CONFIG_UI_PORT=8581
     volumes:
-      - /mnt/user/appdata/homebridge:/homebridge
+      - /mnt/cache/appdata/homebridge:/homebridge
 volumes:
   homebridge:

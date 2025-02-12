@@ -3,7 +3,7 @@ services:
     container_name: ha-fusion
     image: ghcr.io/matt8707/ha-fusion:latest
     volumes:
-      - /mnt/user/appdata/ha-fusion:/app/data
+      - /mnt/cache/appdata/ha-fusion:/app/data
     network_mode: bridge
     ports:
       - 5050:5050

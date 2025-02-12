@@ -10,7 +10,7 @@ services:
       - UMASK=022
       - TZ=Europe/Istanbul
     volumes:
-      - /mnt/user/appdata/prowlarr:/config:rw
+      - /mnt/cache/appdata/prowlarr:/config:rw
     ports:
       - 9696:9696
     restart: unless-stopped

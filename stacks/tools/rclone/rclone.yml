@@ -8,8 +8,8 @@ services:
     ports:
       - "5572:5572"
     volumes:
-      - /mnt/user/appdata/rclone:/config/rclone
-      - /mnt/user/appdata/rclonelogs:/logs
+      - /mnt/cache/appdata/rclone:/config/rclone
+      - /mnt/cache/appdata/rclonelogs:/logs
     environment:
       - PHP_TZ=Europe/Istanbul
       - PUID=99

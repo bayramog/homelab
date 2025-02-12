@@ -10,7 +10,7 @@ services:
       - UMASK=022
       - TZ=Europe/Istanbul
     volumes:
-      - /mnt/user/appdata/sonarr:/config
+      - /mnt/cache/appdata/sonarr:/config
       - /mnt/media/data:/data 
     ports:
       - 8989:8989
