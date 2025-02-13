@@ -16,6 +16,7 @@ services:
       - KEYBOARD=tr-TR
       - GPU=Y
       - TPM=Y
+      - BOOT_MODE=windows_secure
     volumes:
       - /mnt/cache/appdata/windowsdocker:/storage:rw
       - /mnt:/data:rw
