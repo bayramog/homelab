@@ -9,7 +9,7 @@ services:
       - UMASK=022
       - VERSION=11
       - DISK_SIZE=128G
-      - RAM_SIZE=10G
+      - RAM_SIZE=8G
       - CPU_CORES=4
       - LANGUAGE=Turkish
       - REGION=tr-TR
