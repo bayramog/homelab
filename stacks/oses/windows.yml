@@ -17,6 +17,7 @@ services:
       - GPU=Y
       - TPM=Y
       - BOOT_MODE=windows_secure
+      - VMX=Y
     volumes:
       - /mnt/cache/appdata/windowsdocker:/storage:rw
       - /mnt:/data:rw
