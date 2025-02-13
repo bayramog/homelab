@@ -1,3 +1,4 @@
 include:
   - ./autobrr/autobrr.yml
   - ./qbitrr.yml
+  - ./watchlistarr/watchlistarr.yml
