@@ -15,6 +15,7 @@ services:
       - REGION=tr-TR
       - KEYBOARD=tr-TR
       - GPU=Y
+      - TPM=Y
     volumes:
       - /mnt/cache/appdata/windowsdocker:/storage:rw
       - /mnt:/data:rw
