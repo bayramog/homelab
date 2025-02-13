@@ -8,6 +8,7 @@ services:
       PGID: 100
       UMASK: 022
       TZ: Europe/Istanbul
+      LOG_LEVEL: DEBUG
     volumes:
       - /mnt/cache/appdata/watchlistarr:/app/config
     restart: unless-stopped
