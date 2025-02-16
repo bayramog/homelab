@@ -8,6 +8,7 @@ services:
       - PUID=99
       - PGID=100
       - UMASK=022
+      - WATCHTOWER_CLEANUP=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30
