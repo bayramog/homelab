@@ -1,0 +1,20 @@
+
+services:
+  gameyfin:
+    image: grimsi/gameyfin:latest
+    container_name: gameyfin
+    network_mode: bridge
+    environment:
+      - TZ=Europe/Istanbul
+      - PUID=99
+      - PGID=100
+      - UMASK=022
+      - GAMEYFIN_USER=bayramog
+      - GAMEYFIN_PASSWORD=1234567890
+      - GAMEYFIN_IGDB_API_CLIENT_ID=m2n6tauqxb1rl20ycpju693loep77d
+      - GAMEYFIN_IGDB_API_CLIENT_SECRET=rebufb6rcajyp6itv1hno8ney1tb8n
+      - GAMEYFIN_SOURCES=/opt/gameyfin-library/library-1
+    volumes:
+      - /mnt/media/data/media/games:/opt/gameyfin-library/library-1
+    ports:
+      - "8584:8080"
