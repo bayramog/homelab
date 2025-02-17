@@ -17,4 +17,4 @@ services:
     volumes:
       - /mnt/media/data/media/games:/opt/gameyfin-library/library-1:rw
     ports:
-      - "8988:8080"
+      - 8988:8080
