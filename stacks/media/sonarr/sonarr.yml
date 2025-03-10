@@ -5,13 +5,13 @@ services:
     container_name: sonarr
     network_mode: bridge
     environment:
-      - PUID=99
-      - PGID=100
+      - PUID=3000
+      - PGID=3000
       - UMASK=022
       - TZ=Europe/Istanbul
     volumes:
-      - /mnt/cache/appdata/sonarr:/config
-      - /mnt/media/data:/data 
+      - /mnt/internal-ssd/appdata/sonarr:/config
+      - /mnt/mnt/media/data:/data 
     ports:
       - 8989:8989
     restart: unless-stopped
