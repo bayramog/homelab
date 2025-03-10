@@ -3,7 +3,7 @@ include:
   #- ./sonarr/sonarr.yml
   #- ./readarr/readarr.yml
   #- ./prowlarr/prowlarr.yml
-  #- ./plex/plex.yml
+  - ./plex/plex.yml
   #- ./overseerr/overseerr.yml
   #- ./sabnzbd/sabnzbd.yml
   #- ./qbittorrent/qbittorrent.yml
