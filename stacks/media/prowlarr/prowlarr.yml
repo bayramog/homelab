@@ -5,12 +5,12 @@ services:
     container_name: prowlarr
     network_mode: bridge
     environment:
-      - PUID=99
-      - PGID=100
+      - PUID=3000
+      - PGID=3000
       - UMASK=022
       - TZ=Europe/Istanbul
     volumes:
-      - /mnt/cache/appdata/prowlarr:/config:rw
+      - /mnt/internal-ssd/appdata/prowlarr:/config:rw
     ports:
       - 9696:9696
     restart: unless-stopped
