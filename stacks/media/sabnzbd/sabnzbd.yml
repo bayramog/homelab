@@ -4,13 +4,13 @@ services:
     image: lscr.io/linuxserver/sabnzbd:latest
     container_name: sabnzbd
     environment:
-      - PUID=99
-      - PGID=100
+      - PUID=3000
+      - PGID=3000
       - UMASK=022
       - TZ=Europe/Istanbul
     volumes:
-      - /mnt/cache/appdata/sabnzbd:/config:rw
-      - /mnt/media/data/usenet:/data/usenet:rw
+      - /mnt/internal-ssd/appdata/sabnzbd:/config:rw
+      - /mnt/mnt/media/data/usenet:/data/usenet:rw
     ports:
       - 8484:8080
     restart: unless-stopped
