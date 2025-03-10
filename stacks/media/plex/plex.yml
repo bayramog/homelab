@@ -12,7 +12,7 @@ services:
       - UMASK=022
       - TZ=Europe/Istanbul
       - VERSION=docker
-      - PLEX_CLAIM=claim-c9nK_V9vBLFxBy6d8Wx-
+      - PLEX_CLAIM=g8eitxaGWxw-Ky-FgJTM
     volumes:
       - /mnt/mnt/media/data/media:/data/media:rw
       - /mnt/internal-ssd/appdata/plex:/config:rw
