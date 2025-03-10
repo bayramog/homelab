@@ -5,14 +5,14 @@ services:
     container_name: qbittorrent
     network_mode: bridge
     environment:
-      - PUID=99
-      - PGID=100
+      - PUID=3000
+      - PGID=3000
       - UMASK=022
       - TZ=Europe/Istanbul
       - WEBUI_PORT=8080
     volumes:
-      - /mnt/cache/appdata/qbittorrent:/config:rw
-      - /mnt/media/data/torrents:/data/torrents:rw #optional
+      - /mnt/internal-ssd/appdata/qbittorrent:/config:rw
+      - /mnt/mnt/media/data/torrents:/data/torrents:rw #optional
     ports:
       - 8080:8080
     restart: unless-stopped
