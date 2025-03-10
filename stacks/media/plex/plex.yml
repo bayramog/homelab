@@ -7,13 +7,13 @@ services:
     devices:
       - /dev/dri:/dev/dri
     environment:
-      - PUID=99
-      - PGID=100
+      - PUID=3000
+      - PGID=3000
       - UMASK=022
       - TZ=Europe/Istanbul
       - VERSION=docker
       - PLEX_CLAIM=claim-c9nK_V9vBLFxBy6d8Wx-
     volumes:
-      - /mnt/media/data/media:/data/media:rw
-      - /mnt/cache/appdata/plex:/config:rw
+      - /mnt/mnt/media/data/media:/data/media:rw
+      - /mnt/internal-ssd/appdata/plex:/config:rw
     restart: unless-stopped
