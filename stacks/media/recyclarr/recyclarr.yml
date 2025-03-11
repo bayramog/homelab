@@ -5,7 +5,7 @@ services:
     container_name: recyclarr
     network_mode: bridge
     volumes:
-      - /mnt/internal-ssd/appdata/recyclarr:/config
+      - /mnt/internal-ssd/appdata/recyclarr:/config:rw
     environment:
       - TZ=Europe/Istanbul
       - CRON_SCHEDULE=@hourly
