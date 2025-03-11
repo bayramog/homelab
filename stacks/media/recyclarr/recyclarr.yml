@@ -1,0 +1,13 @@
+
+services:
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr
+    container_name: recyclarr
+    user: 3000:3000
+    umask: 022
+    network_mode: bridge
+    volumes:
+      - /mnt/internal-ssd/appdata/recyclarr:/config
+    environment:
+      - TZ=Europe/Istanbul
+      - CRON_SCHEDULE=@hourly
