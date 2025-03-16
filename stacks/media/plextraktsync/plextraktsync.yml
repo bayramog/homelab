@@ -14,6 +14,7 @@ services:
   plextraktsync:
     image: ghcr.io/taxel/plextraktsync:latest
     container_name: plextraktsync
+    tty: true
     command: sync
     environment:
       - PUID=3000
