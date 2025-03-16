@@ -14,6 +14,11 @@ services:
   plextraktsync:
     image: ghcr.io/taxel/plextraktsync:latest
     container_name: plextraktsync
+    tty: true
     command: sync
+    environment:
+      - PUID=3000
+      - PGID=3000
+      - TZ=Europe/Istanbul
     volumes:
-      - /mnt/internal-ssd/appdata/plextraktsync:/app/config
+      - /mnt/internal-ssd/appdata/plextraktsync:/app/config:rw
