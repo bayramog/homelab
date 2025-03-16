@@ -3,3 +3,4 @@ include:
   #- ./qbitrr.yml
   - ./watchlistarr/watchlistarr.yml
   - ./recyclarr/recyclarr.yml
+  - ./plextraktsync.yml
