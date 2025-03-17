@@ -1,0 +1,19 @@
+
+
+services:
+  sftpgo:
+    image: drakkan/sftpgo:latest
+    container_name: sftpgo
+    ports:
+      - "8789:8789"  # WebDAV erişim portu
+    volumes:
+      - /mnt/backup/webdav:/var/lib/sftpgo  # Gömülü SQLite ve diğer veriler için
+    environment:
+      - SFTPGO_ENABLE_WEBDAV=true
+      - SFTPGO_WEBDAV_BIND_ADDR=:8789
+      - PUID=3000
+      - PGID=3000
+      - UMASK=022
+
+    restart: unless-stopped
+
