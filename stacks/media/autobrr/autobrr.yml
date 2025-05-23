@@ -3,7 +3,7 @@ services:
     container_name: autobrr
     image: ghcr.io/autobrr/autobrr:latest
     network_mode: bridge
-    restart: unless-stopped
+    restart: ${RESTART_POLICY}
     #logging:
     #  driver: json-file
     #  options:
@@ -12,9 +12,9 @@ services:
     environment:
       - PUID=99
       - PGID=100
-      - UMASK=022
-      - TZ=Europe/Istanbul
+      - UMASK=${UMASK}
+      - TZ=${TZ}
     volumes:
-      - /mnt/cache/appdata/autobrr:/config:rw
+      - ${APP_CONFIG_PATH}/autobrr:/config:rw
     ports:
       - 7474:7474

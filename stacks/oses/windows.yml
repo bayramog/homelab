@@ -6,7 +6,7 @@ services:
     environment:
       - PUID=99
       - PGID=100
-      - UMASK=022
+      - UMASK=${UMASK}
       - VERSION=11
       - DISK_SIZE=128G
       - RAM_SIZE=8G
@@ -19,8 +19,8 @@ services:
       - BOOT_MODE=windows_secure
       - VMX=Y
     volumes:
-      - /mnt/cache/appdata/windowsdocker:/storage:rw
-      - /mnt:/data:rw
+      - ${APP_CONFIG_PATH}/windowsdocker:/storage:rw
+      - /mnt:${DATA_PATH}:rw
     devices:
       - /dev/dri
       - /dev/kvm
@@ -32,3 +32,4 @@ services:
       - 3389:3389/tcp
       - 3389:3389/udp
     stop_grace_period: 2m
+    restart: ${RESTART_POLICY}
