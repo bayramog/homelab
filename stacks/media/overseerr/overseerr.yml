@@ -5,12 +5,12 @@ services:
     container_name: overseerr
     network_mode: bridge
     environment:
-      - PUID=3000
-      - PGID=3000
-      - UMASK=022
-      - TZ=Europe/Istanbul
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
     volumes:
-      - /mnt/internal-ssd/appdata/overseerr:/config:rw
+      - ${APP_CONFIG_PATH}/overseerr:/config:rw
     ports:
       - 5055:5055
-    restart: unless-stopped
+    restart: ${RESTART_POLICY}

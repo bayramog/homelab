@@ -3,7 +3,7 @@ services:
     container_name: matterbridge
     image: luligu/matterbridge:latest                         # Matterbridge image with the tag latest
     network_mode: host                                        # Ensures the Matter mdns works
-    restart: unless-stopped                                           # Ensures the container always restarts automatically
+    restart: ${RESTART_POLICY}                                # Ensures the container always restarts automatically
     volumes:
-      - /mnt/cache/appdata/matterbridge:/root/Matterbridge        # Mounts the Matterbridge plugin directory
-      - /mnt/cache/appdata/.matterbridge:/root/.matterbridge      # Mounts the Matterbridge storage directory
+      - ${APP_CONFIG_PATH}/matterbridge:/root/Matterbridge    # Mounts the Matterbridge plugin directory
+      - ${APP_CONFIG_PATH}/.matterbridge:/root/.matterbridge  # Mounts the Matterbridge storage directory

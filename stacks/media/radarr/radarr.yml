@@ -5,13 +5,13 @@ services:
     container_name: radarr
     network_mode: bridge
     environment:
-      - PUID=3000
-      - PGID=3000
-      - UMASK=022
-      - TZ=Europe/Istanbul
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
     volumes:
-      - /mnt/internal-ssd/appdata/radarr:/config:rw
-      - /mnt/mnt/media/data:/data:rw 
+      - ${APP_CONFIG_PATH}/radarr:/config:rw
+      - ${MEDIA_PATH}:${DATA_PATH}:rw 
     ports:
       - 7878:7878
-    restart: unless-stopped
+    restart: ${RESTART_POLICY}

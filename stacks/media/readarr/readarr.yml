@@ -5,13 +5,13 @@ services:
     container_name: readarr
     network_mode: bridge
     environment:
-      - PUID=99
-      - PGID=100
-      - UMASK=022
-      - TZ=Europe/Istanbul
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
     volumes:
-      - /mnt/cache/appdata/readarr:/config:rw
-      - /mnt/media/data:/data:rw 
+      - ${APP_CONFIG_PATH}/readarr:/config:rw
+      - ${MEDIA_PATH}:${DATA_PATH}:rw 
     ports:
       - 8787:8787
-    restart: unless-stopped
+    restart: ${RESTART_POLICY}

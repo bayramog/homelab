@@ -4,12 +4,13 @@ services:
     image: ghcr.io/kieraneglin/pinchflat:latest
     environment:
       # Set the timezone to your local timezone
-      - TZ=Europe/Istanbul
-      - PUID=99
-      - PGID=100
-      - UMASK=022
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
     ports:
       - 8945:8945
     volumes:
-      - /mnt/cache/appdata/pinchflat:/config
-      - /mnt/media/data/media/youtube:/downloads
+      - ${APP_CONFIG_PATH}/pinchflat:/config
+      - ${MEDIA_PATH}/media/youtube:/downloads
+    restart: ${RESTART_POLICY}

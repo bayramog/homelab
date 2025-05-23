@@ -6,6 +6,7 @@ services:
     ports:
       - 7500:80
     volumes:
-      - /mnt/cache/appdata/umbrel:/data"
+      - ${APP_CONFIG_PATH}/umbrel:${DATA_PATH}"
       - "/var/run/docker.sock:/var/run/docker.sock"
     stop_grace_period: 1m
+    restart: ${RESTART_POLICY}

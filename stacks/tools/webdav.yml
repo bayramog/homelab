@@ -11,9 +11,9 @@ services:
     environment:
       - SFTPGO_ENABLE_WEBDAV=true
       - SFTPGO_WEBDAV_BIND_ADDR=:8789
-      - PUID=3000
-      - PGID=3000
-      - UMASK=022
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
 
-    restart: unless-stopped
+    restart: ${RESTART_POLICY}
 
