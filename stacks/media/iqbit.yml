@@ -6,7 +6,7 @@ services:
     image: haruvon/iqbit:latest
     restart: ${RESTART_POLICY}
     environment:
-      - QBIT_HOST=http://192.168.4.110:8080
+      - QBIT_HOST=http://${HOST_IP}:8080
       - STANDALONE_SERVER_PORT=8081
     ports:
       - 8081:8081
