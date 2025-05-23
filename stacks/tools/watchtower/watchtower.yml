@@ -7,9 +7,10 @@ services:
     environment:
       - PUID=0
       - PGID=0
-      - UMASK=022
+      - UMASK=${UMASK}
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_REMOVE_VOLUMES=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30
+    restart: ${RESTART_POLICY}

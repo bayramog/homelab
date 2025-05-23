@@ -3,11 +3,11 @@ services:
   homebridge:
     image: homebridge/homebridge:no-avahi
     container_name: homebridge
-    restart: unless-stopped
+    restart: ${RESTART_POLICY}
     network_mode: host
     environment:
       - HOMEBRIDGE_CONFIG_UI_PORT=8581
     volumes:
-      - /mnt/cache/appdata/homebridge:/homebridge
+      - ${APP_CONFIG_PATH}/homebridge:/homebridge
 volumes:
   homebridge:
