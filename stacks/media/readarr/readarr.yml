@@ -5,8 +5,8 @@ services:
     container_name: readarr
     network_mode: bridge
     environment:
-      - PUID=99
-      - PGID=100
+      - PUID=${PUID}
+      - PGID=${PGID}
       - UMASK=${UMASK}
       - TZ=${TZ}
     volumes:

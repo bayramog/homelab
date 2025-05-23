@@ -4,8 +4,8 @@ services:
     container_name: windows
     network_mode: bridge
     environment:
-      - PUID=99
-      - PGID=100
+      - PUID=${PUID}
+      - PGID=${PGID}
       - UMASK=${UMASK}
       - VERSION=11
       - DISK_SIZE=128G

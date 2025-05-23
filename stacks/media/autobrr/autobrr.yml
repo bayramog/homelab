@@ -10,8 +10,8 @@ services:
     #    max-file: ${DOCKERLOGGING_MAXFILE}
     #    max-size: ${DOCKERLOGGING_MAXSIZE}
     environment:
-      - PUID=99
-      - PGID=100
+      - PUID=${PUID}
+      - PGID=${PGID}
       - UMASK=${UMASK}
       - TZ=${TZ}
     volumes:

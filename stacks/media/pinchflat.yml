@@ -5,8 +5,8 @@ services:
     environment:
       # Set the timezone to your local timezone
       - TZ=${TZ}
-      - PUID=99
-      - PGID=100
+      - PUID=${PUID}
+      - PGID=${PGID}
       - UMASK=${UMASK}
     ports:
       - 8945:8945

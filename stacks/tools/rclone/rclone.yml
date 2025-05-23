@@ -12,6 +12,6 @@ services:
       - ${APP_CONFIG_PATH}/rclonelogs:/logs
     environment:
       - PHP_TZ=${TZ}
-      - PUID=99
-      - PGID=100
+      - PUID=${PUID}
+      - PGID=${PGID}
       - UMASK=${UMASK}
