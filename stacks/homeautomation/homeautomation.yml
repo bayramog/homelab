@@ -3,4 +3,6 @@ include:
   - ./matterbridge/matterbridge.yml
   - ./scrypted/scrypted.yml
   - ./homebridge/homebridge.yml
- 
+
+# Environment file for Portainer
+env_file: ../../stack.env

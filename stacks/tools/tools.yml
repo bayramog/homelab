@@ -2,3 +2,6 @@ include:
   #- ./rclone/rclone.yml
   - ./watchtower/watchtower.yml
   - ./webdav.yml
+
+# Environment file for Portainer
+env_file: ../../stack.env
