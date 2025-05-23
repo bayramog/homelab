@@ -6,4 +6,5 @@ services:
     ports:
       - "9050:9000"
     volumes:
-      - /mnt/cache/appdata/arr-tools:/app/backend/data
+      - ${APP_CONFIG_PATH}/arr-tools:/app/backend/data
+    restart: ${RESTART_POLICY}
