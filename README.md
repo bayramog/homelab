@@ -18,4 +18,10 @@ This project uses environment variables to standardize configuration across diff
 
 ### Usage with Portainer
 
-When using this repository with Portainer's Git integration, the environment variables will be automatically recognized and can be modified through the Portainer interface.
+When using this repository with Portainer's Git integration, the environment variables will be automatically recognized through the `env_file` directive in each stack YAML file. The `stack.env` file is referenced with a relative path from each Docker Compose file:
+
+- In the root `docker-compose.yml`: `env_file: ./stack.env`
+- In top-level stack files (e.g., `stacks/media/coremedia.yml`): `env_file: ../../stack.env`
+- In service-specific files (e.g., `stacks/media/radarr/radarr.yml`): `env_file: ../../../stack.env`
+
+This ensures that Portainer can locate and use the environment file regardless of which stack you are deploying.
