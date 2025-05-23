@@ -14,6 +14,3 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30
     restart: ${RESTART_POLICY}
-
-# Environment file for Portainer
-env_file: ../../../stack.env
