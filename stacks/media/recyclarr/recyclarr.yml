@@ -3,12 +3,12 @@ services:
   recyclarr:
     image: ghcr.io/recyclarr/recyclarr
     container_name: recyclarr
-    user: '3000:3000'
+    user: '${PUID}:${PGID}'
     network_mode: bridge
     volumes:
-      - /mnt/internal-ssd/appdata/recyclarr:/config:rw
+      - ${APP_CONFIG_PATH}/recyclarr:/config:rw
     environment:
-      - TZ=Europe/Istanbul
+      - TZ=${TZ}
       - CRON_SCHEDULE=@hourly
-      - UMASK=022
-    restart: unless-stopped
+      - UMASK=${UMASK}
+    restart: ${RESTART_POLICY}

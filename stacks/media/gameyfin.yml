@@ -5,16 +5,17 @@ services:
     container_name: gameyfin
     network_mode: bridge
     environment:
-      - TZ=Europe/Istanbul
+      - TZ=${TZ}
       - PUID=99
       - PGID=100
-      - UMASK=022
+      - UMASK=${UMASK}
       - GAMEYFIN_USER=bayramog
       - GAMEYFIN_PASSWORD=1234567890
       - GAMEYFIN_IGDB_API_CLIENT_ID=m2n6tauqxb1rl20ycpju693loep77d
       - GAMEYFIN_IGDB_API_CLIENT_SECRET=rebufb6rcajyp6itv1hno8ney1tb8n
       - GAMEYFIN_SOURCES=/opt/gameyfin-library/library-1
     volumes:
-      - /mnt/media/data/media/games:/opt/gameyfin-library/library-1:rw
+      - ${MEDIA_PATH}/media/games:/opt/gameyfin-library/library-1:rw
     ports:
       - 8988:8080
+    restart: ${RESTART_POLICY}

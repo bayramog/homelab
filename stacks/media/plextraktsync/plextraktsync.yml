@@ -11,14 +11,16 @@ services:
     labels:
       ofelia.job-run.plextraktsync.schedule: "@every 15m"
       ofelia.job-run.plextraktsync.container: "plextraktsync"
+    restart: ${RESTART_POLICY}
   plextraktsync:
     image: ghcr.io/taxel/plextraktsync:latest
     container_name: plextraktsync
     tty: true
     command: sync
     environment:
-      - PUID=3000
-      - PGID=3000
-      - TZ=Europe/Istanbul
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /mnt/internal-ssd/appdata/plextraktsync:/app/config:rw
+      - ${APP_CONFIG_PATH}/plextraktsync:/app/config:rw
+    restart: ${RESTART_POLICY}
