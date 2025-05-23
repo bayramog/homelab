@@ -9,3 +9,6 @@ include:
   - ./qbittorrent/qbittorrent.yml
   #- ./iqbit.yml
   #- ./pinchflat.yml
+
+# Environment file for Portainer
+env_file: ../../stack.env

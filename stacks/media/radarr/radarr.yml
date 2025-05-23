@@ -11,7 +11,10 @@ services:
       - TZ=${TZ}
     volumes:
       - ${APP_CONFIG_PATH}/radarr:/config:rw
-      - ${MEDIA_PATH}:${DATA_PATH}:rw 
+      - ${MEDIA_PATH}:${DATA_PATH}:rw
     ports:
       - 7878:7878
     restart: ${RESTART_POLICY}
+
+# Environment file for Portainer
+env_file: ../../../stack.env
