@@ -34,5 +34,3 @@ services:
     stop_grace_period: 2m
     restart: ${RESTART_POLICY}
 
-# Environment file for Portainer
-env_file: ../../stack.env

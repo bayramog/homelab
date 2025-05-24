@@ -11,5 +11,3 @@ services:
     ports:
       - 8081:8081
 
-# Environment file for Portainer
-env_file: ../../stack.env

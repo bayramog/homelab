@@ -8,5 +8,3 @@ services:
       - ${APP_CONFIG_PATH}/matterbridge:/root/Matterbridge    # Mounts the Matterbridge plugin directory
       - ${APP_CONFIG_PATH}/.matterbridge:/root/.matterbridge  # Mounts the Matterbridge storage directory
 
-# Environment file for Portainer
-env_file: ../../../stack.env

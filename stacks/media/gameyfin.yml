@@ -19,5 +19,3 @@ services:
     ports:
       - 8988:8080
     restart: ${RESTART_POLICY}
-# Environment file for Portainer
-env_file: ../../stack.env
