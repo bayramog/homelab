@@ -5,5 +5,3 @@ include:
   - ./recyclarr/recyclarr.yml
   - ./plextraktsync/plextraktsync.yml
 
-# Environment file for Portainer
-env_file: ../../stack.env

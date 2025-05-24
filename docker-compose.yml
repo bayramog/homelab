@@ -2,5 +2,3 @@ include:
   - ./stacks/media/arrtools.yml
   - ./stacks/oses/umbrel.yml
 
-# Environment file for Portainer
-env_file: ./stack.env

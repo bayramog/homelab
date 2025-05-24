@@ -128,5 +128,3 @@ services:
 
   
 
-# Environment file for Portainer
-env_file: ../../../stack.env

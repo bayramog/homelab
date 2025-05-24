@@ -18,5 +18,3 @@ services:
     restart: ${RESTART_POLICY}
 
 
-# Environment file for Portainer
-env_file: ../../stack.env

@@ -33,5 +33,3 @@ services:
     #  - overseerr
     #  - ombi
 
-# Environment file for Portainer
-env_file: ../../stack.env
