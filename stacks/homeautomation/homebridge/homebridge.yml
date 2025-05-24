@@ -11,3 +11,5 @@ services:
       - ${APP_CONFIG_PATH}/homebridge:/homebridge
 volumes:
   homebridge:
+# Environment file for Portainer
+env_file: ../../../stack.env

@@ -127,3 +127,6 @@ services:
             #     max-file: "10"
 
   
+
+# Environment file for Portainer
+env_file: ../../../stack.env

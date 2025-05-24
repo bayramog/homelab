@@ -14,3 +14,5 @@ services:
     ports:
       - 9696:9696
     restart: ${RESTART_POLICY}
+# Environment file for Portainer
+env_file: ../../../stack.env
