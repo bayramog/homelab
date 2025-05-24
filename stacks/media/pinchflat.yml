@@ -14,3 +14,5 @@ services:
       - ${APP_CONFIG_PATH}/pinchflat:/config
       - ${MEDIA_PATH}/media/youtube:/downloads
     restart: ${RESTART_POLICY}
+# Environment file for Portainer
+env_file: ../../stack.env

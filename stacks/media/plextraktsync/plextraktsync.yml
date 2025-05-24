@@ -24,3 +24,6 @@ services:
     volumes:
       - ${APP_CONFIG_PATH}/plextraktsync:/app/config:rw
     restart: ${RESTART_POLICY}
+
+# Environment file for Portainer
+env_file: ../../../stack.env

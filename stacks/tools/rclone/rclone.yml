@@ -15,3 +15,5 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - UMASK=${UMASK}
+# Environment file for Portainer
+env_file: ../../../stack.env

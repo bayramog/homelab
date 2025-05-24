@@ -33,3 +33,6 @@ services:
       - 3389:3389/udp
     stop_grace_period: 2m
     restart: ${RESTART_POLICY}
+
+# Environment file for Portainer
+env_file: ../../stack.env

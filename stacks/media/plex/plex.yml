@@ -17,3 +17,6 @@ services:
       - ${MEDIA_PATH}/media:${DATA_PATH}/media:rw
       - ${APP_CONFIG_PATH}/plex:/config:rw
     restart: ${RESTART_POLICY}
+
+# Environment file for Portainer
+env_file: ../../../stack.env

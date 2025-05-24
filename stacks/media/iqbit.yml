@@ -10,3 +10,6 @@ services:
       - STANDALONE_SERVER_PORT=8081
     ports:
       - 8081:8081
+
+# Environment file for Portainer
+env_file: ../../stack.env
