@@ -1,0 +1,11 @@
+include:
+  - ./stacks/media/radarr/radarr.yml
+  - ./stacks/media/sonarr/sonarr.yml
+  #- ./stacks/media/readarr/readarr.yml
+  - ./stacks/media/prowlarr/prowlarr.yml
+  - ./stacks/media/plex/plex.yml
+  - ./stacks/media/overseerr/overseerr.yml
+  - ./stacks/media/sabnzbd/sabnzbd.yml
+  - ./stacks/media/qbittorrent/qbittorrent.yml
+  #- ./stacks/media/iqbit.yml
+  #- ./stacks/media/pinchflat.yml
