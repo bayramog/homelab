@@ -96,7 +96,7 @@ if [ "\$ONEDRIVE_SYNC_ENABLED" = "true" ]; then
     echo "Please configure rclone with OneDrive first."
   fi
 fi
-EOF
+      EOF
         chmod +x /usr/local/bin/perform_backup
         
         # Create a crontab file
