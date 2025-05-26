@@ -5,7 +5,7 @@
 BACKUP_RETENTION=${BACKUP_RETENTION:-7}  # Default to keeping 7 days of backups
 ONEDRIVE_SYNC=${ONEDRIVE_SYNC:-true}
 TZ=${TZ:-UTC}
-APP_CONFIG_DATA_PATH=${APP_CONFIG_DATA_PATH}
+APP_CONFIG_PATH=${APP_CONFIG_PATH}
 
 # Set up backup directory and timestamp
 BACKUP_DIR="/backups"
