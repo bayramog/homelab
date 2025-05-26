@@ -4,12 +4,9 @@ This directory contains the backup solution for the Homelab project. It uses [re
 
 ## Configuration
 
-The backup solution is configured through environment variables in the `backup_config.env` file:
+The backup solution is configured through environment variables in the project's root `.env` file:
 
 ```env
-# Password for restic repository encryption 
-BACKUP_PASSWORD=change-me-to-a-secure-password
-
 # Cron schedule for backups (default: daily at 2 AM)
 BACKUP_CRON=0 2 * * *
 
@@ -19,23 +16,20 @@ ONEDRIVE_SYNC_ENABLED=false
 
 ## Setup Instructions
 
-1. Copy the sample configuration file:
+1. Add the backup configuration variables to your root `.env` file:
    ```sh
-   cp backup_config.env.sample backup_config.env
+   # Backup configuration
+   BACKUP_CRON=0 2 * * *
+   ONEDRIVE_SYNC_ENABLED=false
    ```
 
-2. Edit the configuration file to set a secure password and adjust the backup schedule if needed:
+2. Set up rclone for OneDrive (if you want to sync backups to OneDrive):
    ```sh
-   nano backup_config.env
-   ```
-
-3. Set up rclone for OneDrive (if you want to sync backups to OneDrive):
-   ```sh
-   docker exec -it rclone rclone config
+   docker exec -it backup sh -c "apk add --no-cache rclone && rclone config"
    ```
    Follow the prompts to set up OneDrive as a remote named "onedrive".
 
-4. Enable OneDrive sync in the backup_config.env file by setting `ONEDRIVE_SYNC_ENABLED=true`
+3. Enable OneDrive sync in the `.env` file by setting `ONEDRIVE_SYNC_ENABLED=true`
 
 ## Backup Contents
 
@@ -56,12 +50,12 @@ Older backups are automatically removed to save space.
 
 ## Manual Backup
 
-To perform a manual backup, run the provided script:
+To perform a manual backup, run the following command:
 ```sh
-./run-backup.sh
+docker exec backup sh -c "perform_backup"
 ```
 
-This script triggers a backup immediately, regardless of the scheduled time.
+This triggers a backup immediately, regardless of the scheduled time.
 
 ## Restoring from Backup
 
