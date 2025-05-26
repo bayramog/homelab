@@ -2,4 +2,5 @@ include:
   #- ./rclone/rclone.yml
   - ./watchtower/watchtower.yml
   - ./webdav.yml
+  - ./backup/backup.yml
 

@@ -1,0 +1,20 @@
+services:
+  backup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backup
+    restart: ${RESTART_POLICY}
+    volumes:
+      - ${APP_CONFIG_PATH}:/source:ro
+      - ${APP_CONFIG_PATH}/backup:/backup
+      - ./backup-wrapper.sh:/backup-wrapper.sh
+      - ${APP_CONFIG_PATH}/rclone:/rclone-config
+    env_file:
+      - ./backup_config.env
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - RESTIC_REPOSITORY=/backup/repository
+    entrypoint: ["sh", "/backup-wrapper.sh"]
