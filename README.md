@@ -25,3 +25,40 @@ In Portainer:
 2. Enter the path to the environment file: `stack.env` 
 
 This ensures that Portainer can locate and use the environment file regardless of which stack you are deploying.
+
+## Backup Solution
+
+This project includes an automated backup solution that backs up all application configuration data and can sync to OneDrive.
+
+### Features
+
+- Automated backups using restic
+- Configurable backup schedule via cron
+- Data deduplication and compression
+- Encrypted backups
+- Configurable retention policy
+- OneDrive integration via rclone
+
+### Setup
+
+1. Navigate to the backup configuration directory:
+   ```
+   stacks/tools/backup/
+   ```
+
+2. Copy the sample configuration file:
+   ```
+   cp backup_config.env.sample backup_config.env
+   ```
+
+3. Edit the configuration file with your desired settings:
+   ```
+   nano backup_config.env
+   ```
+
+4. For OneDrive integration, configure rclone:
+   ```
+   docker exec -it rclone rclone config
+   ```
+
+For detailed instructions, see the [backup README](stacks/tools/backup/README.md).

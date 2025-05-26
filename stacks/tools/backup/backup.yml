@@ -1,0 +1,85 @@
+services:
+  backup:
+    image: restic/restic:latest
+    container_name: backup
+    restart: ${RESTART_POLICY}
+    volumes:
+      - ${APP_CONFIG_PATH}:/source:ro
+      - ${APP_CONFIG_PATH}/backup:/backup
+      - ${APP_CONFIG_PATH}/rclone:/rclone-config
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - BACKUP_CRON=${BACKUP_CRON:-0 2 * * *}
+      - ONEDRIVE_SYNC_ENABLED=${ONEDRIVE_SYNC_ENABLED:-false}
+      - RESTIC_REPOSITORY=/backup/repository
+    entrypoint: ["/bin/sh", "-c"]
+    command: |
+      "
+      # Create necessary directories
+      mkdir -p /backup/repository /backup/logs
+      
+      # Install required packages
+      apk add --no-cache busybox-suid tzdata curl ca-certificates rclone
+      
+      # Function to perform backup
+      perform_backup() {
+        echo \"Starting backup at \$(date)\"
+        
+        # Backup app configuration data
+        restic backup /source \
+          --exclude=\"/source/backup\" \
+          --tag homelab-config
+        
+        # Keep only the last 7 daily backups, last 4 weekly backups, and last 3 monthly backups
+        restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune
+        
+        echo \"Backup completed at \$(date)\"
+        
+        # Sync to OneDrive if enabled
+        if [ \"\$ONEDRIVE_SYNC_ENABLED\" = \"true\" ]; then
+          echo \"Starting OneDrive sync at \$(date)\"
+          
+          # Check if rclone is configured
+          if [ -f \"/rclone-config/rclone.conf\" ]; then
+            # Sync the backup repository to OneDrive
+            rclone sync /backup/repository onedrive:homelab-backups \
+              --config=/rclone-config/rclone.conf \
+              --log-file=/backup/logs/rclone-\$(date +%Y%m%d).log
+            
+            echo \"OneDrive sync completed at \$(date)\"
+          else
+            echo \"ERROR: rclone configuration not found. Cannot sync to OneDrive.\"
+            echo \"Please configure rclone with OneDrive first.\"
+          fi
+        fi
+      }
+      
+      # Initialize restic repository if not already initialized
+      restic snapshots || restic init
+      
+      # If BACKUP_CRON is set, set up the cron job
+      if [ -n \"\$BACKUP_CRON\" ]; then
+        echo \"Setting up cron job: \$BACKUP_CRON\"
+        
+        # Make perform_backup available to the system
+        echo 'perform_backup() {
+          '"$(declare -f perform_backup | tail -n +2)"'
+        }' > /usr/local/bin/perform_backup
+        chmod +x /usr/local/bin/perform_backup
+        
+        # Create a crontab file
+        echo \"\$BACKUP_CRON /bin/sh -c \\\"perform_backup >> /backup/logs/backup-\\\$(date +\\%Y\\%m\\%d).log 2>&1\\\"\" > /tmp/backup-crontab
+        
+        # Install the crontab
+        crontab /tmp/backup-crontab
+        
+        # Start cron in the foreground
+        echo \"Starting cron daemon...\"
+        crond -f -l 8
+      else
+        # If no cron is set, just run the backup once and exit
+        perform_backup
+      fi
+      "
