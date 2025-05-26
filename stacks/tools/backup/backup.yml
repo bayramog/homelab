@@ -65,12 +65,12 @@ services:
         echo "Setting up cron job: \$BACKUP_CRON"
         
         # Create perform_backup script to avoid unsupported declare in BusyBox shell
-        cat << 'EOF' > /usr/local/bin/perform_backup
+        cat > /usr/local/bin/perform_backup << 'EOF'
 #!/bin/sh
 # Create necessary directories
 mkdir -p /backup/repository /backup/logs
 
-echo "Starting backup at $(date)"
+echo "Starting backup at \$(date)"
 
 restic backup /source \
   --exclude="/source/backup" \
@@ -80,23 +80,23 @@ restic backup /source \
 restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune \
   --insecure-no-password
 
-echo "Backup completed at $(date)"
+echo "Backup completed at \$(date)"
 
 if [ "\$ONEDRIVE_SYNC_ENABLED" = "true" ]; then
-  echo "Starting OneDrive sync at $(date)"
+  echo "Starting OneDrive sync at \$(date)"
 
   if [ -f "/rclone-config/rclone.conf" ]; then
     rclone sync /backup/repository onedrive:homelab-backups \
       --config=/rclone-config/rclone.conf \
-      --log-file=/backup/logs/rclone-$(date +%Y%m%d).log
+      --log-file=/backup/logs/rclone-\$(date +%Y%m%d).log
 
-    echo "OneDrive sync completed at $(date)"
+    echo "OneDrive sync completed at \$(date)"
   else
     echo "ERROR: rclone configuration not found. Cannot sync to OneDrive."
     echo "Please configure rclone with OneDrive first."
   fi
 fi
-      EOF
+EOF
         chmod +x /usr/local/bin/perform_backup
         
         # Create a crontab file
