@@ -16,7 +16,6 @@ services:
       - RESTIC_REPOSITORY=/backup/repository
     entrypoint: ["/bin/sh", "-c"]
     command: |
-      "
       # Create necessary directories
       mkdir -p /backup/repository /backup/logs
       
@@ -113,4 +112,3 @@ EOF
         # If no cron is set, just run the backup once and exit
         perform_backup
       fi
-      "
