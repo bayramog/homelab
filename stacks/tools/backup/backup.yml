@@ -7,7 +7,7 @@ services:
       # Mount app data directories to backup
       - ${APP_CONFIG_PATH}:/data/appdata:ro
       # Mount backup scripts and output directories
-      - ./backup/scripts:/scripts
+      - ./stacks/tools/backup/scripts:/scripts
       - ${APP_CONFIG_PATH}/backups:/backups
       # Mount rclone config to enable OneDrive sync
       - ${APP_CONFIG_PATH}/rclone:/rclone_config:ro
