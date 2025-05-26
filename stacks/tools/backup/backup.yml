@@ -2,21 +2,21 @@ services:
   backup:
     image: alpine:latest
     container_name: backup
-    restart: unless-stopped
+    restart: ${RESTART_POLICY:-unless-stopped}
     volumes:
       # Mount app data directories to backup
-      - /mnt/cache/appdata:/data/appdata:ro
-      - /mnt/user/appdata:/data/user_appdata:ro
+      - ${APP_CONFIG_DATA_PATH}:/data/appdata:ro
       # Mount backup scripts and output directories
       - ./backup/scripts:/scripts
-      - /mnt/cache/backups:/backups
+      - ${APP_CONFIG_DATA_PATH}/backups:/backups
       # Mount rclone config to enable OneDrive sync
-      - /mnt/cache/appdata/rclone:/rclone_config:ro
+      - ${APP_CONFIG_DATA_PATH}/rclone:/rclone_config:ro
     environment:
       - TZ=${TZ:-Europe/Istanbul}
-      - BACKUP_RETENTION=7  # Number of days to keep backups
-      - BACKUP_SCHEDULE="0 2 * * *"  # Run at 2 AM every day
-      - ONEDRIVE_SYNC=true  # Enable sync to OneDrive
+      - BACKUP_RETENTION=${BACKUP_RETENTION:-7}  # Number of days to keep backups
+      - BACKUP_SCHEDULE=${BACKUP_SCHEDULE:-"0 2 * * *"}  # Run at 2 AM every day
+      - ONEDRIVE_SYNC=${ONEDRIVE_SYNC:-true}  # Enable sync to OneDrive
+      - APP_CONFIG_DATA_PATH=${APP_CONFIG_DATA_PATH}
     entrypoint: /bin/sh
     command: -c "apk add --no-cache bash tar gzip rclone tzdata && \
                   chmod +x /scripts/*.sh && \

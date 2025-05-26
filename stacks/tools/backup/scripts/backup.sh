@@ -5,6 +5,7 @@
 BACKUP_RETENTION=${BACKUP_RETENTION:-7}  # Default to keeping 7 days of backups
 ONEDRIVE_SYNC=${ONEDRIVE_SYNC:-true}
 TZ=${TZ:-UTC}
+APP_CONFIG_DATA_PATH=${APP_CONFIG_DATA_PATH}
 
 # Set up backup directory and timestamp
 BACKUP_DIR="/backups"
@@ -25,19 +26,11 @@ log "Starting backup process at ${TIMESTAMP}"
 mkdir -p "${BACKUP_PATH}"
 
 # Back up appdata directories
-log "Backing up /data/appdata directories"
+log "Backing up app data directories"
 find /data/appdata -maxdepth 1 -mindepth 1 -type d | while read app_dir; do
     app_name=$(basename "$app_dir")
     log "Backing up ${app_name}"
     tar -czf "${BACKUP_PATH}/${app_name}.tar.gz" -C /data/appdata "${app_name}" || log "Error backing up ${app_name}"
-done
-
-# Back up user_appdata directories
-log "Backing up /data/user_appdata directories"
-find /data/user_appdata -maxdepth 1 -mindepth 1 -type d | while read app_dir; do
-    app_name=$(basename "$app_dir")
-    log "Backing up ${app_name} from user_appdata"
-    tar -czf "${BACKUP_PATH}/${app_name}_user.tar.gz" -C /data/user_appdata "${app_name}" || log "Error backing up ${app_name} from user_appdata"
 done
 
 # Create a backup summary
