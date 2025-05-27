@@ -1,7 +1,7 @@
 include:
   #- ./autobrr/autobrr.yml
   #- ./qbitrr.yml
-  - ./watchlistarr/watchlistarr.yml
+   #- ./watchlistarr/watchlistarr.yml
   - ./recyclarr/recyclarr.yml
   - ./plextraktsync/plextraktsync.yml
 
