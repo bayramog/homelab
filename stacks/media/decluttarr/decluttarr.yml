@@ -1,0 +1,67 @@
+version: "3.3"
+services:
+  decluttarr:
+    image: ghcr.io/manimatter/decluttarr:latest
+    container_name: decluttarr
+    restart: ${RESTART_POLICY}
+    environment:
+      TZ: ${TZ}
+      PUID: ${PUID}
+      PGID: ${PGID}
+
+      ## General
+      # TEST_RUN: True
+      # SSL_VERIFICATION: False
+      LOG_LEVEL: INFO
+
+      ## Features
+      REMOVE_TIMER: 10
+      REMOVE_FAILED: True
+      REMOVE_FAILED_IMPORTS: True
+      REMOVE_METADATA_MISSING: True
+      REMOVE_MISSING_FILES: True
+      REMOVE_ORPHANS: True
+      REMOVE_SLOW: False
+      REMOVE_STALLED: True
+      REMOVE_UNMONITORED: True
+      RUN_PERIODIC_RESCANS: '
+        {
+        "SONARR": {"MISSING": true, "CUTOFF_UNMET": true, "MAX_CONCURRENT_SCANS": 3, "MIN_DAYS_BEFORE_RESCAN": 7},
+        "RADARR": {"MISSING": true, "CUTOFF_UNMET": true, "MAX_CONCURRENT_SCANS": 3, "MIN_DAYS_BEFORE_RESCAN": 7}
+        }'
+
+      # Feature Settings
+      PERMITTED_ATTEMPTS: 3
+      NO_STALLED_REMOVAL_QBIT_TAG: Don't Kill
+      MIN_DOWNLOAD_SPEED: 100
+      FAILED_IMPORT_MESSAGE_PATTERNS: '
+        [
+        "Not a Custom Format upgrade for existing",
+        "Not an upgrade for existing"
+        ]'
+      IGNORED_DOWNLOAD_CLIENTS: ["emulerr"]
+
+      ## Radarr
+      RADARR_URL: http://${HOST_IP}:7878
+      RADARR_KEY: e49bbc248593415a9f0898106d563d96
+
+      ## Sonarr
+      SONARR_URL: http://${HOST_IP}:8989
+      SONARR_KEY: 52d2ad68ebc84c608cb131413fc5aa0b
+
+      ## Lidarr
+     ##  LIDARR_URL: http://lidarr:8686
+     ##  LIDARR_KEY: $LIDARR_API_KEY
+
+      ## Readarr
+     ##  READARR_URL: http://readarr:8787
+     ##  READARR_KEY: $READARR_API_KEY
+
+      ## Whisparr
+     ##  WHISPARR_URL: http://whisparr:6969
+     ##  WHISPARR_KEY: $WHISPARR_API_KEY
+
+      ## qBitorrent
+      QBITTORRENT_URL: http://${HOST_IP}:8080
+      # QBITTORRENT_USERNAME: Your name
+      # QBITTORRENT_PASSWORD: Your password
