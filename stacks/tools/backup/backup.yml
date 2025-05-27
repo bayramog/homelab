@@ -12,7 +12,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - BACKUP_CRON=${BACKUP_CRON:-0 2 * * *}
-      - ONEDRIVE_SYNC_ENABLED=${ONEDRIVE_SYNC_ENABLED:-false}
+      - ONEDRIVE_SYNC_ENABLED=${ONEDRIVE_SYNC_ENABLED}
       - RESTIC_REPOSITORY=/backup/repository
     entrypoint: ["/bin/sh"]
     command:
@@ -39,6 +39,32 @@ services:
         restic backup /source --exclude=/source/backup --tag homelab-config --insecure-no-password
         restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --insecure-no-password
         echo "Backup completed at $(date)"
+        
+        # Sync to OneDrive if enabled
+        if [ "$ONEDRIVE_SYNC_ENABLED" = "true" ]; then
+          echo "Starting OneDrive sync at $(date)"
+          
+          # Check if rclone is configured
+          if [ -f "/rclone-config/rclone.conf" ]; then
+            echo "Syncing backup repository to OneDrive..."
+            rclone sync /backup/repository onedrive:homelab-backups \
+              --config=/rclone-config/rclone.conf \
+              --log-file=/backup/logs/rclone-$(date +%Y%m%d).log \
+              --log-level INFO
+            
+            if [ $? -eq 0 ]; then
+              echo "OneDrive sync completed successfully at $(date)"
+            else
+              echo "ERROR: OneDrive sync failed at $(date)"
+            fi
+          else
+            echo "ERROR: rclone configuration not found at /rclone-config/rclone.conf"
+            echo "Please configure rclone with OneDrive first using:"
+            echo "docker exec -it backup rclone config --config=/rclone-config/rclone.conf"
+          fi
+        else
+          echo "OneDrive sync is disabled"
+        fi
         EOF
           chmod +x /usr/local/bin/backup-script.sh
           
@@ -53,6 +79,30 @@ services:
           echo "No cron schedule set, running backup once..."
           restic backup /source --exclude=/source/backup --tag homelab-config --insecure-no-password
           restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --insecure-no-password
-          echo "Backup completed. Keeping container alive..."
+          echo "Backup completed."
+          
+          # Sync to OneDrive if enabled
+          if [ "$ONEDRIVE_SYNC_ENABLED" = "true" ]; then
+            echo "Starting OneDrive sync at $(date)"
+            
+            if [ -f "/rclone-config/rclone.conf" ]; then
+              echo "Syncing backup repository to OneDrive..."
+              rclone sync /backup/repository onedrive:homelab-backups \
+                --config=/rclone-config/rclone.conf \
+                --log-file=/backup/logs/rclone-$(date +%Y%m%d).log \
+                --log-level INFO
+              
+              if [ $? -eq 0 ]; then
+                echo "OneDrive sync completed successfully at $(date)"
+              else
+                echo "ERROR: OneDrive sync failed at $(date)"
+              fi
+            else
+              echo "ERROR: rclone configuration not found"
+              echo "Please configure rclone first"
+            fi
+          fi
+          
+          echo "Keeping container alive..."
           tail -f /dev/null
         fi
