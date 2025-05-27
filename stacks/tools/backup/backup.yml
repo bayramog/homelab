@@ -25,5 +25,34 @@ services:
         echo "Initializing restic repository..."
         export RESTIC_REPOSITORY=/backup/repository
         restic snapshots --insecure-no-password || restic init --insecure-no-password
-        echo "Setup completed. Keeping container alive..."
-        tail -f /dev/null
+        echo "Setup completed."
+        
+        # Check if cron is enabled
+        if [ -n "$BACKUP_CRON" ]; then
+          echo "Setting up cron job: $BACKUP_CRON"
+          
+          # Create backup script
+          cat > /usr/local/bin/backup-script.sh << 'EOF'
+        #!/bin/sh
+        cd /backup
+        echo "Starting backup at $(date)"
+        restic backup /source --exclude=/source/backup --tag homelab-config --insecure-no-password
+        restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --insecure-no-password
+        echo "Backup completed at $(date)"
+        EOF
+          chmod +x /usr/local/bin/backup-script.sh
+          
+          # Setup crontab
+          echo "$BACKUP_CRON /usr/local/bin/backup-script.sh >> /backup/logs/backup-$(date +%Y%m%d).log 2>&1" > /tmp/backup-crontab
+          crontab /tmp/backup-crontab
+          echo "Cron job installed:"
+          crontab -l
+          echo "Starting cron daemon..."
+          exec crond -f -l 2
+        else
+          echo "No cron schedule set, running backup once..."
+          restic backup /source --exclude=/source/backup --tag homelab-config --insecure-no-password
+          restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --insecure-no-password
+          echo "Backup completed. Keeping container alive..."
+          tail -f /dev/null
+        fi
