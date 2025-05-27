@@ -21,13 +21,17 @@ services:
       apk add --no-cache busybox-suid tzdata curl ca-certificates rclone &&
       restic snapshots --insecure-no-password || restic init --insecure-no-password &&
       if [ -n "$BACKUP_CRON" ]; then
-        echo "$BACKUP_CRON sh -c \"restic backup /source --exclude=/source/backup --tag homelab-config --insecure-no-password && restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --insecure-no-password\"" > /tmp/backup-crontab &&
+        echo "Setting up cron job: $BACKUP_CRON" &&
+        echo "$BACKUP_CRON cd /backup && restic backup /source --exclude=/source/backup --tag homelab-config --insecure-no-password && restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --insecure-no-password" > /tmp/backup-crontab &&
         crontab /tmp/backup-crontab &&
-        echo "Cron job set up, starting cron daemon..." &&
-        crond -f -l 8;
+        echo "Cron job installed, starting cron daemon..." &&
+        crontab -l &&
+        exec crond -f -l 2;
       else
-        echo "Running backup once..." &&
+        echo "No cron schedule set, running backup once and staying alive..." &&
         restic backup /source --exclude=/source/backup --tag homelab-config --insecure-no-password &&
-        restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --insecure-no-password;
+        restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --insecure-no-password &&
+        echo "Backup completed, keeping container alive..." &&
+        tail -f /dev/null;
       fi
       '
