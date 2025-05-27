@@ -14,15 +14,16 @@ services:
       - BACKUP_CRON=${BACKUP_CRON:-0 2 * * *}
       - ONEDRIVE_SYNC_ENABLED=${ONEDRIVE_SYNC_ENABLED:-false}
       - RESTIC_REPOSITORY=/backup/repository
-    command: >
-      sh -c '
-      echo "Starting backup container..." &&
-      mkdir -p /backup/repository /backup/logs &&
-      echo "Installing packages..." &&
-      apk add --no-cache busybox-suid tzdata curl ca-certificates rclone &&
-      echo "Initializing restic repository..." &&
-      export RESTIC_REPOSITORY=/backup/repository &&
-      restic snapshots --insecure-no-password || restic init --insecure-no-password &&
-      echo "Setup completed. Keeping container alive..." &&
-      tail -f /dev/null
-      '
+    entrypoint: ["/bin/sh"]
+    command:
+      - "-c"
+      - |
+        echo "Starting backup container..."
+        mkdir -p /backup/repository /backup/logs
+        echo "Installing packages..."
+        apk add --no-cache busybox-suid tzdata curl ca-certificates rclone
+        echo "Initializing restic repository..."
+        export RESTIC_REPOSITORY=/backup/repository
+        restic snapshots --insecure-no-password || restic init --insecure-no-password
+        echo "Setup completed. Keeping container alive..."
+        tail -f /dev/null
