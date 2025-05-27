@@ -15,84 +15,19 @@ services:
       - ONEDRIVE_SYNC_ENABLED=${ONEDRIVE_SYNC_ENABLED:-false}
       - RESTIC_REPOSITORY=/backup/repository
     entrypoint: ["/bin/sh", "-c"]
-    command: |
-      # Create necessary directories
-      mkdir -p /backup/repository /backup/logs
-      
-      # Install required packages
-      apk add --no-cache busybox-suid tzdata curl ca-certificates rclone
-      
-      # Function to perform backup
-      perform_backup() {
-        echo \"Starting backup at \$(date)\"
-        
-        # Backup app configuration data
-        restic backup /source \
-          --exclude=\"/source/backup\" \
-          --tag homelab-config \
-          --insecure-no-password
-        
-        # Keep only the last 7 daily backups, last 4 weekly backups, and last 3 monthly backups
-        restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune \
-          --insecure-no-password
-        
-        echo \"Backup completed at \$(date)\"
-        
-        # Sync to OneDrive if enabled
-        if [ \"\$ONEDRIVE_SYNC_ENABLED\" = \"true\" ]; then
-          echo \"Starting OneDrive sync at \$(date)\"
-          
-          # Check if rclone is configured
-          if [ -f \"/rclone-config/rclone.conf\" ]; then
-            # Sync the backup repository to OneDrive
-            rclone sync /backup/repository onedrive:homelab-backups \
-              --config=/rclone-config/rclone.conf \
-              --log-file=/backup/logs/rclone-\$(date +%Y%m%d).log
-            
-            echo \"OneDrive sync completed at \$(date)\"
-          else
-            echo \"ERROR: rclone configuration not found. Cannot sync to OneDrive.\"
-            echo \"Please configure rclone with OneDrive first.\"
-          fi
-        fi
-      }
-      
-      # Initialize restic repository if not already initialized
-      restic snapshots --insecure-no-password || restic init --insecure-no-password
-
-      # If BACKUP_CRON is set, set up the cron job
-      if [ -n "\$BACKUP_CRON" ]; then
-        echo "Setting up cron job: \$BACKUP_CRON"
-        
-        # Create perform_backup script using simple echo commands
-        echo '#!/bin/sh' > /usr/local/bin/perform_backup
-        echo 'mkdir -p /backup/repository /backup/logs' >> /usr/local/bin/perform_backup
-        echo 'echo "Starting backup at \$(date)"' >> /usr/local/bin/perform_backup
-        echo 'restic backup /source --exclude="/source/backup" --tag homelab-config --insecure-no-password' >> /usr/local/bin/perform_backup
-        echo 'restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --insecure-no-password' >> /usr/local/bin/perform_backup
-        echo 'echo "Backup completed at \$(date)"' >> /usr/local/bin/perform_backup
-        echo 'if [ "\$ONEDRIVE_SYNC_ENABLED" = "true" ]; then' >> /usr/local/bin/perform_backup
-        echo '  echo "Starting OneDrive sync at \$(date)"' >> /usr/local/bin/perform_backup
-        echo '  if [ -f "/rclone-config/rclone.conf" ]; then' >> /usr/local/bin/perform_backup
-        echo '    rclone sync /backup/repository onedrive:homelab-backups --config=/rclone-config/rclone.conf --log-file=/backup/logs/rclone-\$(date +%Y%m%d).log' >> /usr/local/bin/perform_backup
-        echo '    echo "OneDrive sync completed at \$(date)"' >> /usr/local/bin/perform_backup
-        echo '  else' >> /usr/local/bin/perform_backup
-        echo '    echo "ERROR: rclone configuration not found. Cannot sync to OneDrive."' >> /usr/local/bin/perform_backup
-        echo '    echo "Please configure rclone with OneDrive first."' >> /usr/local/bin/perform_backup
-        echo '  fi' >> /usr/local/bin/perform_backup
-        echo 'fi' >> /usr/local/bin/perform_backup
-        chmod +x /usr/local/bin/perform_backup
-        
-        # Create a crontab file
-        echo \"\$BACKUP_CRON /bin/sh -c \\\"perform_backup >> /backup/logs/backup-\\\$(date +\\%Y\\%m\\%d).log 2>&1\\\"\" > /tmp/backup-crontab
-        
-        # Install the crontab
-        crontab /tmp/backup-crontab
-        
-        # Start cron in the foreground
-        echo \"Starting cron daemon...\"
-        crond -f -l 8
+    command: >
+      sh -c '
+      mkdir -p /backup/repository /backup/logs &&
+      apk add --no-cache busybox-suid tzdata curl ca-certificates rclone &&
+      restic snapshots --insecure-no-password || restic init --insecure-no-password &&
+      if [ -n "$BACKUP_CRON" ]; then
+        echo "$BACKUP_CRON sh -c \"restic backup /source --exclude=/source/backup --tag homelab-config --insecure-no-password && restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --insecure-no-password\"" > /tmp/backup-crontab &&
+        crontab /tmp/backup-crontab &&
+        echo "Cron job set up, starting cron daemon..." &&
+        crond -f -l 8;
       else
-        # If no cron is set, just run the backup once and exit
-        perform_backup
+        echo "Running backup once..." &&
+        restic backup /source --exclude=/source/backup --tag homelab-config --insecure-no-password &&
+        restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --insecure-no-password;
       fi
+      '
