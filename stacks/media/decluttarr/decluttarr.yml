@@ -39,7 +39,7 @@ services:
         "Not a Custom Format upgrade for existing",
         "Not an upgrade for existing"
         ]'
-      IGNORED_DOWNLOAD_CLIENTS: ["emulerr"]
+
 
       ## Radarr
       RADARR_URL: http://${HOST_IP}:7878
