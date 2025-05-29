@@ -3,6 +3,6 @@ include:
   #- ./qbitrr.yml
    #- ./watchlistarr/watchlistarr.yml
   - ./stacks/media/recyclarr/recyclarr.yml
-  - ./stacks/media/plextraktsync/plextraktsync.yml
+ # - ./stacks/media/plextraktsync/plextraktsync.yml
   - ./stacks/media/decluttarr/decluttarr.yml
 
