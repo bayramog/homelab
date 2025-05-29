@@ -15,7 +15,7 @@ services:
   plextraktsync:
     image: ghcr.io/taxel/plextraktsync:latest
     container_name: plextraktsync
-    tty: true
+    tty: false
     command: sync
     environment:
       - PUID=${PUID}
@@ -23,5 +23,5 @@ services:
       - TZ=${TZ}
     volumes:
       - ${APP_CONFIG_PATH}/plextraktsync:/app/config:rw
-    restart: ${RESTART_POLICY}
+
 
