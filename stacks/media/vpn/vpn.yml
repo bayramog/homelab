@@ -19,7 +19,7 @@ services:
       - SERVER_COUNTRIES=Netherlands  # veya Turkey, Germany vs.
       # DNS ayarları
       - DNS_KEEP_NAMESERVER=off
-      - DNS_ADDRESS=1.1.1.1,8.8.8.8
+      - DNS_ADDRESS=8.8.8.8
       - DOT=off
       # Firewall ayarları - yerel ağlara erişim
       - FIREWALL_OUTBOUND_SUBNETS=192.168.0.0/16,172.16.0.0/12,10.0.0.0/8
