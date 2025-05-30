@@ -5,4 +5,5 @@ include:
   - ./stacks/media/recyclarr/recyclarr.yml
  # - ./stacks/media/plextraktsync/plextraktsync.yml
   - ./stacks/media/decluttarr/decluttarr.yml
+  - ./stacks/media/excludarr/excludarr.yml
 

@@ -1,0 +1,22 @@
+
+services:
+  excludarr:
+    image: excludarr/excludarr
+    container_name: excludarr
+    environment:
+      - GENERAL_FAST_SEARCH=true
+      - GENERAL_LOCALE=tr_TR
+      - GENERAL_PROVIDERS=netflix, amazon prime video, disney plus, blutv
+      - RADARR_URL=http://192.168.4.110:7878
+      - RADARR_API_KEY=e49bbc248593415a9f0898106d563d96
+      - RADARR_VERIFY_SSL=false
+      - RADARR_EXCLUDE_TAGS=[1 - bayramogulcan]
+      - SONARR_URL=http://192.168.4.110:8989
+      - SONARR_API_KEY=52d2ad68ebc84c608cb131413fc5aa0b
+      - SONARR_VERIFY_SSL=false
+      - SONARR_EXCLUDE=""
+      - SONARR_EXCLUDE_TAGS=[1 - bayramogulcan]
+      - CRON_MODE=true
+    volumes:
+      - /mnt/internal-ssd/apps/excludarr/crontab:/etc/excludarr/crontab
+    restart: unless-stopped
