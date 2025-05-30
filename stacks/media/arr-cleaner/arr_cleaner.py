@@ -44,6 +44,12 @@ class ArrCleaner:
             response = requests.get(url, headers=headers, timeout=30)
             response.raise_for_status()
             return response.json()
+        except requests.exceptions.HTTPError as e:
+            if response.status_code == 404:
+                logger.warning(f"API endpoint bulunamadı: {url}")
+            else:
+                logger.error(f"HTTP hatası: {url} - {response.status_code}: {e}")
+            return None
         except requests.exceptions.RequestException as e:
             logger.error(f"API isteği hatası: {url} - {e}")
             return None
@@ -129,6 +135,8 @@ class ArrCleaner:
             series_monitored = show.get('monitored', True)
             series_path = show.get('path', '')
             
+            logger.debug(f"İşleniyor: {series_title} (ID: {series_id}, Monitored: {series_monitored})")
+            
             # 1. ADIM: Tüm dizi unmonitored ise
             if not series_monitored and series_path and os.path.exists(series_path):
                 logger.info(f"Tamamen unmonitored dizi: {series_title}")
@@ -137,7 +145,12 @@ class ArrCleaner:
                     continue  # Bu dizi silindi, diğer kontrole gerek yok
             
             # 2. ADIM: Sezon bazında kontrol
-            seasons = self.make_request(f"{self.sonarr_url}/api/v3/season?seriesId={series_id}", self.sonarr_headers)
+            # Sonarr'da sezon bilgilerini dizi detayından al
+            series_detail = self.make_request(f"{self.sonarr_url}/api/v3/series/{series_id}", self.sonarr_headers)
+            if not series_detail:
+                continue
+                
+            seasons = series_detail.get('seasons', [])
             if not seasons:
                 continue
                 
@@ -155,11 +168,14 @@ class ArrCleaner:
                     continue
                 
                 # 3. ADIM: Bölüm bazında kontrol (sadece monitored sezonlar için)
-                episodes = self.make_request(f"{self.sonarr_url}/api/v3/episode?seriesId={series_id}&seasonNumber={season_number}", self.sonarr_headers)
+                episodes = self.make_request(f"{self.sonarr_url}/api/v3/episode?seriesId={series_id}", self.sonarr_headers)
                 if not episodes:
                     continue
+                
+                # Bu sezona ait bölümleri filtrele
+                season_episodes = [ep for ep in episodes if ep.get('seasonNumber') == season_number]
                     
-                for episode in episodes:
+                for episode in season_episodes:
                     episode_monitored = episode.get('monitored', True)
                     has_file = episode.get('hasFile', False)
                     
