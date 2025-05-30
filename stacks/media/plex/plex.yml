@@ -12,7 +12,7 @@ services:
       - UMASK=${UMASK}
       - TZ=${TZ}
       - VERSION=docker
-      - PLEX_CLAIM=claim-zXUvZxD62UYx_QC6oaud
+      - PLEX_CLAIM=claim-GB7soy72AipX3om8-ZxQ
     volumes:
       - ${MEDIA_PATH}/media:${DATA_PATH}/media:rw
       - ${APP_CONFIG_PATH}/plex:/config:rw
