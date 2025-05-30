@@ -1,0 +1,31 @@
+services:
+  arr-cleaner:
+    image: python:3.11-slim
+    container_name: arr-cleaner
+    restart: ${RESTART_POLICY}
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      # Radarr ayarları
+      - RADARR_URL=http://${HOST_IP}:7878
+      - RADARR_API_KEY=e49bbc248593415a9f0898106d563d96
+      # Sonarr ayarları  
+      - SONARR_URL=http://${HOST_IP}:8989
+      - SONARR_API_KEY=52d2ad68ebc84c608cb131413fc5aa0b
+      # Çalışma ayarları
+      - CRON_SCHEDULE=0 * * * *  # Her saat
+      - DRY_RUN=false  # false = gerçekten sil, true = sadece test
+      - LOG_LEVEL=INFO
+    volumes:
+      - ${APP_CONFIG_PATH}/arr-cleaner:/app/config:rw
+      - ${MEDIA_PATH}:${DATA_PATH}:rw  # Medya dosyalarına erişim
+      - /mnt/internal-ssd/apps/arr-cleaner/scripts:/app/scripts:ro
+    working_dir: /app
+    command: >
+      sh -c "
+        echo 'Installing dependencies...' &&
+        pip install --no-cache-dir requests schedule pytz &&
+        echo 'Starting ARR Cleaner...' &&
+        python /app/scripts/arr_cleaner.py
+      "

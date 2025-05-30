@@ -7,4 +7,5 @@ include:
   - ./stacks/media/decluttarr/decluttarr.yml
   - ./stacks/media/vpn/vpn.yml
   - ./stacks/media/excludarr/excludarr.yml
+  - ./stacks/media/arr-cleaner/arr-cleaner.yml
 
