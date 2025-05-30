@@ -10,15 +10,16 @@ services:
       # Gluetun web arayüzü için (isteğe bağlı)
       - "8888:8000"
     environment:
-      # Custom OVPN dosyası kullanımı
-      - VPN_SERVICE_PROVIDER=custom
+      # PrivadoVPN built-in desteği
+      - VPN_SERVICE_PROVIDER=privado
       - VPN_TYPE=openvpn
-      - OPENVPN_CUSTOM_CONFIG=/gluetun/custom.ovpn
-      # VPN kullanıcı bilgileri (OVPN dosyasında yoksa)
-      # - OPENVPN_USER=YOUR_VPN_USERNAME
-      # - OPENVPN_PASSWORD=YOUR_VPN_PASSWORD
+      - OPENVPN_USER=nhpegakzkkqt
+      - OPENVPN_PASSWORD=mfI+S0c[>R=4
+      # Server seçimi (isteğe bağlı)
+      - SERVER_COUNTRIES=Netherlands  # veya Turkey, Germany vs.
       # DNS ayarları
-      - DNS_KEEP_NAMESERVER=on
+      - DNS_KEEP_NAMESERVER=off
+      - DNS_ADDRESS=1.1.1.1,8.8.8.8
       - DOT=off
       # Firewall ayarları - yerel ağlara erişim
       - FIREWALL_OUTBOUND_SUBNETS=192.168.0.0/16,172.16.0.0/12,10.0.0.0/8
