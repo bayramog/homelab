@@ -7,16 +7,16 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     ports:
-      # Excludarr için port (ihtiyaç varsa)
-      - "8080:8080"
+      # Gluetun web arayüzü için (isteğe bağlı)
+      - "8888:8000"
     environment:
       # Custom OVPN dosyası kullanımı
       - VPN_SERVICE_PROVIDER=custom
       - VPN_TYPE=openvpn
       - OPENVPN_CUSTOM_CONFIG=/gluetun/custom.ovpn
       # VPN kullanıcı bilgileri (OVPN dosyasında yoksa)
-      - OPENVPN_USER=YOUR_VPN_USERNAME
-      - OPENVPN_PASSWORD=YOUR_VPN_PASSWORD
+      # - OPENVPN_USER=YOUR_VPN_USERNAME
+      # - OPENVPN_PASSWORD=YOUR_VPN_PASSWORD
       # DNS ayarları
       - DNS_KEEP_NAMESERVER=on
       - DOT=off
