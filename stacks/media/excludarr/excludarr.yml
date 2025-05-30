@@ -3,6 +3,9 @@ services:
   excludarr:
     image: excludarr/excludarr
     container_name: excludarr
+    network_mode: "service:vpn"  # VPN container'ının network'ünü kullan
+    depends_on:
+      - vpn
     environment:
       - GENERAL_FAST_SEARCH=true
       - GENERAL_LOCALE=tr_TR

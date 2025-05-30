@@ -1,0 +1,33 @@
+services:
+  vpn:
+    image: qmcgaw/gluetun
+    container_name: vpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      # Excludarr için port (ihtiyaç varsa)
+      - "8080:8080"
+    environment:
+      # Custom OVPN dosyası kullanımı
+      - VPN_SERVICE_PROVIDER=custom
+      - VPN_TYPE=openvpn
+      - OPENVPN_CUSTOM_CONFIG=/gluetun/custom.ovpn
+      # VPN kullanıcı bilgileri (OVPN dosyasında yoksa)
+      - OPENVPN_USER=YOUR_VPN_USERNAME
+      - OPENVPN_PASSWORD=YOUR_VPN_PASSWORD
+      # DNS ayarları
+      - DNS_KEEP_NAMESERVER=on
+      - DOT=off
+      # Firewall ayarları - yerel ağlara erişim
+      - FIREWALL_OUTBOUND_SUBNETS=192.168.0.0/16,172.16.0.0/12,10.0.0.0/8
+    volumes:
+      - /mnt/internal-ssd/apps/vpn:/gluetun
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://www.google.com"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
