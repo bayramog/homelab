@@ -2,5 +2,5 @@ include:
   #- ./stacks/tools/rclone/rclone.yml
   #- ./stacks/tools/watchtower/watchtower.yml
   #- ./stacks/tools/webdav.yml
-  - ./stacks/tools/backup/backup.yml
+  #- ./stacks/tools/backup/backup.yml
 
